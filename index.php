@@ -67,16 +67,19 @@ $countMhs = mysqli_num_rows($resultMhs);
 
                             </td>
                         </tr>
+                    <?php
+                    }
+
+                    ?>
                 </tbody>
             </table>
-    <?php
-                    }
-                } else {
-                    echo '<div class="alert alert-primary" role="alert">
+        <?php
+        } else {
+            echo '<div class="alert alert-primary" role="alert">
   Data Masih Kosong <a href="add.php" class="alert-link">Isi Data Sekarang</a>
 </div>';
-                }
-    ?>
+        }
+        ?>
 
     </div>
 
