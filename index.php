@@ -1,3 +1,11 @@
+<?php
+include "koneksi.php";
+$queryMhs = "SELECT * FROM mahasiswa";
+$resultMhs = mysqli_query($conn, $queryMhs);
+$countMhs = mysqli_num_rows($resultMhs);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,47 +21,62 @@
 <body>
     <nav class="navbar bg-body-tertiary border-bottom border-light-subtle">
         <div class="container-fluid px-4">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.php">
                 <h4>
                     Dashboard Penilaian Mahasiswa
                 </h4>
             </a>
-            <button type="button" class="btn btn-success d-flex justify-content-evenly align-items-center gap-1">Add <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+            <a href="add.php" type="button" class="btn btn-success d-flex justify-content-evenly align-items-center gap-1">Add <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                </svg></button>
+                </svg></a>
 
         </div>
     </nav>
 
-    <div class="container d-flex justify-content-center align-items-center">
-        <table class="table table-striped table-bordered mt-5 ">
-            <thead>
-                <tr>
-                    <th scope="col">NIM</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Jenis Kelamin</th>
-                    <th scope="col">Jurusan</th>
-                    <th scope="col">Password</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        |
-                        <button type="button" class="btn btn-danger">Delete</button>
+    <div class="container d-flex justify-content-center align-items-center pt-5">
 
-                    </td>
-                </tr>
+        <?php
+        if ($countMhs > 0) {
 
-            </tbody>
-        </table>
+        ?>
+            <table class="table table-striped table-bordered  ">
+                <thead>
+                    <tr>
+                        <th scope="col">NIM</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Jenis Kelamin</th>
+                        <th scope="col">Jurusan</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($dataMhs = mysqli_fetch_array($resultMhs, MYSQLI_NUM)) {
+                    ?>
+                        <tr>
+                            <th scope="row"><?php echo "$dataMhs[0]" ?></th>
+                            <td><?php echo "$dataMhs[1]" ?></td>
+                            <td><?php echo "$dataMhs[2]" ?></td>
+                            <td><?php echo "$dataMhs[3]" ?></td>
+                            <td><?php echo "$dataMhs[4]" ?></td>
+                            <td>
+                                <a href="edit.php?nim=<?php echo "$dataMhs[0]" ?>" type="button" class="btn btn-warning">Edit</a>
+                                |
+                                <a href="delete.php?nim=<?php echo "$dataMhs[0]" ?>" type="button" class="btn btn-danger">Delete</a>
+
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+    <?php
+                    }
+                } else {
+                    echo '<div class="alert alert-primary" role="alert">
+  Data Masih Kosong <a href="add.php" class="alert-link">Isi Data Sekarang</a>
+</div>';
+                }
+    ?>
 
     </div>
 
