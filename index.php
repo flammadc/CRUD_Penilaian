@@ -18,8 +18,8 @@ $countMhs = mysqli_num_rows($resultMhs);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <nav class="navbar bg-body-tertiary border-bottom border-light-subtle">
+<body class="bg-transparent">
+    <nav class="navbar bg-body-secondary border-bottom border-light-subtle">
         <div class="container-fluid px-4">
             <a class="navbar-brand" href="index.php">
                 <h4>
@@ -33,14 +33,14 @@ $countMhs = mysqli_num_rows($resultMhs);
         </div>
     </nav>
 
-    <div class="container d-flex justify-content-center align-items-center pt-5">
+    <div class="container  d-flex justify-content-center align-items-center pt-5 ">
 
         <?php
         if ($countMhs > 0) {
 
         ?>
-            <table class="table table-striped table-bordered  ">
-                <thead>
+            <table class="table  shadow-sm p-3 mb-5 rounded">
+                <thead class="table-light">
                     <tr>
                         <th scope="col">NIM</th>
                         <th scope="col">Nama</th>
@@ -75,9 +75,9 @@ $countMhs = mysqli_num_rows($resultMhs);
             </table>
         <?php
         } else {
-            echo '<div class="alert alert-primary" role="alert">
-  Data Masih Kosong <a href="add.php" class="alert-link">Isi Data Sekarang</a>
-</div>';
+            echo '<div class="alert alert-primary shadow-sm p-3 mb-5 rounded" role="alert">
+                Data Masih Kosong <a href="add.php" class="alert-link">Isi Data Sekarang</a>
+                </div>';
         }
         ?>
 

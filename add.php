@@ -17,7 +17,7 @@ if (!isset($_POST['submit'])) {
     </head>
 
     <body>
-        <nav class="navbar bg-body-tertiary border-bottom border-light-subtle">
+        <nav class="navbar bg-body-secondary border-bottom border-light-subtle">
             <div class="container-fluid px-4">
                 <a class="navbar-brand" href="index.php">
                     <h4>
@@ -30,22 +30,22 @@ if (!isset($_POST['submit'])) {
         </nav>
 
         <div class="container ">
-            <form class="mt-5 " enctype="multipart/form-data" method="post">
+            <form class="mt-5 shadow-sm py-4 px-3 mb-5 bg-light rounded" enctype="multipart/form-data" method="post">
                 <h4 class="mb-3">Tambah Mahasiswa</h4>
                 <div class="mb-3 row align-items-center">
-                    <label for="nim" class="col-sm-2 col-form-label">NIM</label>
+                    <label for="nim" class="col-sm-2 fw-semibold col-form-label">NIM</label>
                     <div class="col-sm-10">
                         <input type="text" name="nim" class="form-control" id="nim">
                     </div>
                 </div>
                 <div class="mb-3 row align-items-center">
-                    <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+                    <label for="nama" class="col-sm-2 fw-semibold col-form-label">Nama</label>
                     <div class="col-sm-10">
                         <input type="text" name="nama" class="form-control" id="nama">
                     </div>
                 </div>
                 <div class="mb-3 row align-items-center">
-                    <label for="jk" class="col-sm-2 col-form-label">Jenis Kelamin</label>
+                    <label for="jk" class="col-sm-2 fw-semibold col-form-label">Jenis Kelamin</label>
                     <div class="col-sm-10">
 
                         <div class="form-check">
@@ -64,7 +64,7 @@ if (!isset($_POST['submit'])) {
 
                 </div>
                 <div class="mb-3 row align-items-center">
-                    <label for="jurusan" class="col-sm-2 col-form-label">Jurusan</label>
+                    <label for="jurusan" class="col-sm-2 fw-semibold col-form-label">Jurusan</label>
                     <div class="col-sm-10">
                         <select class="form-select" name="jurusan" aria-label="Default select example">
                             <option value="Sistem Informasi">Sistem Informasi</option>
@@ -76,14 +76,14 @@ if (!isset($_POST['submit'])) {
                     </div>
                 </div>
                 <div class="mb-3 row align-items-center">
-                    <label for="password" class="col-sm-2 col-form-label">Password</label>
+                    <label for="password" class="col-sm-2 fw-semibold col-form-label">Password</label>
                     <div class="col-sm-10">
                         <input type="password" name="password" class="form-control" id="password">
                     </div>
                 </div>
-                <div class="row justify-items-right mt-4">
-                    <div class="col-sm-9"></div>
-                    <button name="submit" type="submit" class="btn btn-primary col-sm-3 ">Submit</button>
+                <div class="d-flex justify-items-right mt-4">
+                    <div class="col-sm-10"></div>
+                    <button name="submit" type="submit" class="btn btn-primary col-sm-2 ">Submit</button>
                 </div>
             </form>
         <?php
