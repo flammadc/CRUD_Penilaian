@@ -8,7 +8,8 @@ $queryMhs = "SELECT
     n.uas, 
     (0.2 * n.tugas) + (0.4 * n.uts) + (0.4 * n.uas) AS nilai_akhir, 
     mk.nama_matkul AS nama_matakuliah, 
-    d.nama AS nama_dosen
+    d.nama AS nama_dosen,
+    d.nip
 FROM 
     mahasiswa m
 LEFT JOIN 
@@ -97,7 +98,7 @@ $countMhs = mysqli_num_rows($resultMhs);
                             <td><?php echo "$dataMhs[6]" ?></td>
                             <td><?php echo "$dataMhs[7]" ?></td>
                             <td>
-                                <a href="edit.php?nim=<?php echo "$dataMhs[0]" ?>" type="button" class="btn btn-warning">Edit</a>
+                                <a href="edit.php?nim=<?php echo "$dataMhs[0]" ?>&nip=<?php echo "$dataMhs[8]" ?>" type="button" class="btn btn-warning">Edit</a>
 
                             </td>
                         </tr>
