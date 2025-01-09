@@ -1,6 +1,22 @@
 <?php
-include "koneksi.php";
-$queryMhs = "SELECT * FROM mahasiswa";
+include "../koneksi.php";
+$queryMhs = "SELECT 
+    m.nim, 
+    m.nama, 
+    n.tugas, 
+    n.uts, 
+    n.uas, 
+    (0.2 * n.tugas) + (0.4 * n.uts) + (0.4 * n.uas) AS nilai_akhir, 
+    mk.nama_matkul AS nama_matakuliah, 
+    d.nama AS nama_dosen
+FROM 
+    mahasiswa m
+LEFT JOIN 
+    nilai n ON m.nim = n.nim
+LEFT JOIN 
+    dosen d ON d.nip = n.nip
+LEFT JOIN 
+    matakuliah mk ON d.kode_matkul = mk.kode_matkul;";
 $resultMhs = mysqli_query($conn, $queryMhs);
 $countMhs = mysqli_num_rows($resultMhs);
 
@@ -23,15 +39,29 @@ $countMhs = mysqli_num_rows($resultMhs);
         <div class="container-fluid px-4">
             <a class="navbar-brand" href="index.php">
                 <h4>
-                    Dashboard Penilaian Mahasiswa
+                    Dashboard Dosen
                 </h4>
             </a>
-            <a href="add.php" type="button" class="btn btn-success d-flex justify-content-evenly align-items-center gap-1">Add <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link text-black" aria-current="page" href="../admin/index.php">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-black" href="../dosen/index.php">Dosen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-black" href="../mahasiswa/index.php">Mahasiswa</a>
+                </li>
+
+            </ul>
+            <a href="add.php" type="button" class="btn btn-success d-flex justify-content-evenly align-items-center gap-1">Tambah Nilai <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                </svg></a>
+                </svg>
+            </a>
 
         </div>
     </nav>
+
 
     <div class="container  d-flex justify-content-center align-items-center pt-5 ">
 
@@ -44,9 +74,12 @@ $countMhs = mysqli_num_rows($resultMhs);
                     <tr>
                         <th scope="col">NIM</th>
                         <th scope="col">Nama</th>
-                        <th scope="col">Jenis Kelamin</th>
-                        <th scope="col">Jurusan</th>
-                        <th scope="col">Password</th>
+                        <th scope="col">Tugas</th>
+                        <th scope="col">UTS</th>
+                        <th scope="col">UAS</th>
+                        <th scope="col">Akhir</th>
+                        <th scope="col">Matakuliah</th>
+                        <th scope="col">Dosen</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -60,10 +93,11 @@ $countMhs = mysqli_num_rows($resultMhs);
                             <td><?php echo "$dataMhs[2]" ?></td>
                             <td><?php echo "$dataMhs[3]" ?></td>
                             <td><?php echo "$dataMhs[4]" ?></td>
+                            <td><?php echo "$dataMhs[5]" ?></td>
+                            <td><?php echo "$dataMhs[6]" ?></td>
+                            <td><?php echo "$dataMhs[7]" ?></td>
                             <td>
                                 <a href="edit.php?nim=<?php echo "$dataMhs[0]" ?>" type="button" class="btn btn-warning">Edit</a>
-                                |
-                                <a href="delete.php?nim=<?php echo "$dataMhs[0]" ?>" type="button" class="btn btn-danger">Delete</a>
 
                             </td>
                         </tr>

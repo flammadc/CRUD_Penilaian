@@ -1,5 +1,26 @@
 <?php
-include "koneksi.php";
+include "../koneksi.php";
+$getNIM = $_GET['nim'];
+$editMhs = "SELECT 
+    m.nim, 
+    m.nama, 
+    n.tugas, 
+    n.uts, 
+    n.uas, 
+    (0.2 * n.tugas) + (0.4 * n.uts) + (0.4 * n.uas) AS nilai_akhir, 
+    mk.nama_matkul AS nama_matakuliah, 
+    d.nama AS nama_dosen,
+    d.nip
+FROM 
+    mahasiswa m
+LEFT JOIN 
+    nilai n ON m.nim = n.nim
+LEFT JOIN 
+    dosen d ON d.nip = n.nip
+LEFT JOIN 
+    matakuliah mk ON d.kode_matkul = mk.kode_matkul;";
+$resultMhs = mysqli_query($conn, $editMhs);
+$dataMhs = mysqli_fetch_array($resultMhs);
 if (!isset($_POST['submit'])) {
 
 ?>
@@ -21,7 +42,7 @@ if (!isset($_POST['submit'])) {
             <div class="container-fluid px-4">
                 <a class="navbar-brand" href="index.php">
                     <h4>
-                        Dashboard Penilaian Mahasiswa
+                        Dashboard Dosen
                     </h4>
                 </a>
 
@@ -31,56 +52,49 @@ if (!isset($_POST['submit'])) {
 
         <div class="container ">
             <form class="mt-5 shadow-sm py-4 px-3 mb-5 bg-light rounded" enctype="multipart/form-data" method="post">
-                <h4 class="mb-3">Tambah Mahasiswa</h4>
+                <h4 class="mb-3">Edit Nilai</h4>
                 <div class="mb-3 row align-items-center">
                     <label for="nim" class="col-sm-2 fw-semibold col-form-label">NIM</label>
                     <div class="col-sm-10">
-                        <input type="text" name="nim" class="form-control" id="nim">
+                        <input type="text" name="nim" class="form-control" id="nim" readonly value="<?php echo $dataMhs[0] ?>">
                     </div>
                 </div>
+
                 <div class="mb-3 row align-items-center">
                     <label for="nama" class="col-sm-2 fw-semibold col-form-label">Nama</label>
                     <div class="col-sm-10">
-                        <input type="text" name="nama" class="form-control" id="nama">
+                        <input type="text" name="nama" class="form-control" id="nama" readonly value="<?php echo $dataMhs[1] ?>">
                     </div>
                 </div>
-                <div class="mb-3 row align-items-center">
-                    <label for="jk" class="col-sm-2 fw-semibold col-form-label">Jenis Kelamin</label>
-                    <div class="col-sm-10">
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jk" id="lk" value="Laki-laki">
-                            <label class="form-check-label" for="lk">
-                                Laki-laki
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jk" id="pr" value="Perempuan">
-                            <label class="form-check-label" for="pr">
-                                Perempuan
-                            </label>
-                        </div>
+                <div class="mb-3 row align-items-center">
+                    <label for="tugas" class="col-sm-2 fw-semibold col-form-label">Tugas</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="tugas" class="form-control" id="tugas" value="<?php echo $dataMhs[2] ?>">
                     </div>
+                </div>
+                <div class="mb-3 row align-items-center">
+                    <label for="uts" class="col-sm-2 fw-semibold col-form-label">UTS</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="uts" class="form-control" id="uts" value="<?php echo $dataMhs[3] ?>">
+                    </div>
+                </div>
+                <div class="mb-3 row align-items-center">
+                    <label for="uas" class="col-sm-2 fw-semibold col-form-label">UAS</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="uas" class="form-control" id="uas" value="<?php echo $dataMhs[4] ?>">
+                    </div>
+                </div>
 
-                </div>
                 <div class="mb-3 row align-items-center">
-                    <label for="jurusan" class="col-sm-2 fw-semibold col-form-label">Jurusan</label>
+                    <label for="nip" class="col-sm-2 fw-semibold col-form-label">Dosen</label>
                     <div class="col-sm-10">
-                        <select class="form-select" name="jurusan" aria-label="Default select example">
-                            <option value="Sistem Informasi">Sistem Informasi</option>
-                            <option value="Teknik Informatika">Teknik Informatika</option>
-                            <option value="Hubungan Internasional">Hubungan Internasional</option>
-                            <option value="Ilmu Komunikasi">Ilmu Komunikasi</option>
-                            <option value="Ilmu Hukum">Ilmu Hukum</option>
-                        </select>
+                        <option type="text" name="nip" class="form-control" id="nip" readonly value="<?php echo $dataMhs[8] ?>"><?php echo $dataMhs[7] ?></option>
                     </div>
                 </div>
-                <div class="mb-3 row align-items-center">
-                    <label for="password" class="col-sm-2 fw-semibold col-form-label">Password</label>
-                    <div class="col-sm-10">
-                        <input type="password" name="password" class="form-control" id="password">
-                    </div>
-                </div>
+
+
+
                 <div class="d-flex justify-items-right mt-4">
                     <div class="col-sm-10"></div>
                     <button name="submit" type="submit" class="btn btn-primary col-sm-2 ">Submit</button>
@@ -88,22 +102,24 @@ if (!isset($_POST['submit'])) {
             </form>
         <?php
     } else {
-        $nim = $_POST["nim"];
         $nama = $_POST["nama"];
-        $jk = $_POST["jk"];
-        $jurusan = $_POST["jurusan"];
-        $password = md5($_POST["password"]);
+        $tugas = $_POST["tugas"];
+        $uts = $_POST["uts"];
+        $uas = $_POST["uas"];
+        $nim = $_POST["nim"];
+        $nip = $_POST["nip"];
 
-        $insertMhs = "INSERT INTO mahasiswa VALUE ('$nim','$nama','$jk','$jurusan','$password')";
-        $queryMhs = mysqli_query($conn, $insertMhs);
-        if ($queryMhs) {
+
+        $updateNilai = "UPDATE nilai SET tugas='$tugas',uts='$uts',uas='$uas'WHERE nip='$nip' AND nim = '$nim'";
+        $queryNilai = mysqli_query($conn, $updateNilai);
+        if ($queryNilai) {
             echo "<script>
-            alert('Data Berhasil Disimpan!')
+            alert('Data Berhasil Diupdate!')
             window.location = 'index.php'
         </script>";
         } else {
             echo "<script>
-            alert('Data Gagal Disimpan!')
+            alert('Data Gagal Diupdate!')
             window.location = 'index.php'
         </script>";
         }
