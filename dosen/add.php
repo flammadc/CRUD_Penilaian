@@ -1,5 +1,20 @@
 <?php
+session_start();
 include "../koneksi.php";
+
+if (!isset($_SESSION['role_id'])) {
+    header("Location: ../index.php");
+    exit;
+}
+
+if ($_SESSION['role_id'] == 1) {
+    header("Location: ../admin/index.php");
+}
+if ($_SESSION['role_id'] == 3) {
+    header("Location: ../mahasiswa/index.php");
+}
+$sNIP = $_SESSION['username'];
+
 $editMhs = "SELECT 
     m.nim, 
     m.nama, 
@@ -54,7 +69,7 @@ if (!isset($_POST['submit'])) {
                 <div class="mb-3 row align-items-center">
                     <label for="nim" class="col-sm-2 fw-semibold col-form-label">NIM</label>
                     <div class="col-sm-10">
-                        <select class="form-select" id="nim" name="nim" aria-label="Default select example">
+                        <select class="form-select" id="nim" name="nim" aria-label="Default select example" required>
                             <option class="bg-secondary text-white " disabled>Pilih:</option>
 
                             <?php
@@ -68,22 +83,7 @@ if (!isset($_POST['submit'])) {
                     </div>
                 </div>
 
-                <div class="mb-3 row align-items-center">
-                    <label for="nip" class="col-sm-2 fw-semibold col-form-label">Dosen</label>
-                    <div class="col-sm-10">
-                        <select class="form-select" id="nip" name="nip" aria-label="Default select example">
-                            <option class="bg-secondary text-white " disabled>Pilih:</option>
 
-                            <?php
-                            $queryMhs = "SELECT nip, nama from dosen";
-                            $resultMhs = mysqli_query($conn, $queryMhs);
-                            while ($dosen = mysqli_fetch_array($resultMhs, MYSQLI_NUM)) {
-                                echo "<option value='$dosen[0]'>$dosen[1]</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                </div>
 
                 <div class="mb-3 row align-items-center">
                     <label for="tugas" class="col-sm-2 fw-semibold col-form-label">Tugas</label>
@@ -119,7 +119,7 @@ if (!isset($_POST['submit'])) {
         try {
 
             $nim = $_POST["nim"];
-            $nip = $_POST["nip"];
+            $nip = $sNIP;
             $tugas = $_POST["tugas"];
             $uts = $_POST["uts"];
             $uas = $_POST["uas"];

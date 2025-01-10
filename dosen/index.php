@@ -1,5 +1,19 @@
 <?php
+session_start();
 include "../koneksi.php";
+
+if (!isset($_SESSION['role_id'])) {
+    header("Location: ../index.php");
+    exit;
+}
+
+if ($_SESSION['role_id'] == 1) {
+    header("Location: ../admin/index.php");
+}
+if ($_SESSION['role_id'] == 3) {
+    header("Location: ../mahasiswa/index.php");
+}
+$sNIP = $_SESSION['username'];
 $queryMhs = "SELECT 
     m.nim, 
     m.nama, 
@@ -17,7 +31,7 @@ LEFT JOIN
 LEFT JOIN 
     dosen d ON d.nip = n.nip
 LEFT JOIN 
-    matakuliah mk ON d.kode_matkul = mk.kode_matkul;";
+    matakuliah mk ON d.kode_matkul = mk.kode_matkul WHERE d.nip = '$sNIP';";
 $resultMhs = mysqli_query($conn, $queryMhs);
 $countMhs = mysqli_num_rows($resultMhs);
 
@@ -43,22 +57,24 @@ $countMhs = mysqli_num_rows($resultMhs);
                     Dashboard Dosen
                 </h4>
             </a>
-            <ul class="nav justify-content-center">
+            <ul class="nav justify-content-center gap-5">
                 <li class="nav-item">
-                    <a class="nav-link text-black" aria-current="page" href="../admin/index.php">Admin</a>
+                    <a href="../logout.php" type="button" class="btn btn-danger d-flex justify-content-evenly align-items-center gap-1">Logout <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        </svg>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="../dosen/index.php">Dosen</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="../mahasiswa/index.php">Mahasiswa</a>
+                    <a href="add.php" type="button" class="btn btn-success d-flex justify-content-evenly align-items-center gap-1">Tambah Nilai <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        </svg>
+                    </a>
                 </li>
 
+
             </ul>
-            <a href="add.php" type="button" class="btn btn-success d-flex justify-content-evenly align-items-center gap-1">Tambah Nilai <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                </svg>
-            </a>
+
+
 
         </div>
     </nav>

@@ -1,5 +1,20 @@
 <?php
+session_start();
 include "../koneksi.php";
+
+if (!isset($_SESSION['role_id'])) {
+    header("Location: ../index.php");
+    exit;
+}
+
+if ($_SESSION['role_id'] == 1) {
+    header("Location: ../admin/index.php");
+}
+if ($_SESSION['role_id'] == 3) {
+    header("Location: ../mahasiswa/index.php");
+}
+$role_id = $_SESSION['role_id'];
+$username = $_SESSION['username'];
 $getNIM = $_GET['nim'];
 $getNIP = $_GET['nip'];
 

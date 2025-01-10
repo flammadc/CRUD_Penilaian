@@ -44,11 +44,11 @@ if (!isset($_POST['submit'])) {
 
         <div class="container ">
             <form class="mt-5 shadow-sm py-4 px-3 mb-5 bg-light rounded" enctype="multipart/form-data" method="post">
-                <h4 class="mb-3">Tambah Mahasiswa</h4>
+                <h4 class="mb-3">Tambah Dosen</h4>
                 <div class="mb-3 row align-items-center">
-                    <label for="nim" class="col-sm-2 fw-semibold col-form-label">NIM</label>
+                    <label for="nip" class="col-sm-2 fw-semibold col-form-label">NIP</label>
                     <div class="col-sm-10">
-                        <input type="text" name="nim" class="form-control" id="nim">
+                        <input type="text" name="nip" class="form-control" id="nip">
                     </div>
                 </div>
                 <div class="mb-3 row align-items-center">
@@ -58,34 +58,15 @@ if (!isset($_POST['submit'])) {
                     </div>
                 </div>
                 <div class="mb-3 row align-items-center">
-                    <label for="jk" class="col-sm-2 fw-semibold col-form-label">Jenis Kelamin</label>
+                    <label for="kode_matkul" class="col-sm-2 fw-semibold col-form-label">Kode Mata Kuliah</label>
                     <div class="col-sm-10">
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jk" id="lk" value="Laki-laki">
-                            <label class="form-check-label" for="lk">
-                                Laki-laki
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jk" id="pr" value="Perempuan">
-                            <label class="form-check-label" for="pr">
-                                Perempuan
-                            </label>
-                        </div>
+                        <input type="text" name="kode_matkul" class="form-control" id="kode_matkul">
                     </div>
-
                 </div>
                 <div class="mb-3 row align-items-center">
-                    <label for="jurusan" class="col-sm-2 fw-semibold col-form-label">Jurusan</label>
+                    <label for="nama_matkul" class="col-sm-2 fw-semibold col-form-label">Nama Mata Kuliah</label>
                     <div class="col-sm-10">
-                        <select class="form-select" name="jurusan" aria-label="Default select example">
-                            <option value="Sistem Informasi">Sistem Informasi</option>
-                            <option value="Teknik Informatika">Teknik Informatika</option>
-                            <option value="Hubungan Internasional">Hubungan Internasional</option>
-                            <option value="Ilmu Komunikasi">Ilmu Komunikasi</option>
-                            <option value="Ilmu Hukum">Ilmu Hukum</option>
-                        </select>
+                        <input type="text" name="nama_matkul" class="form-control" id="nama_matkul">
                     </div>
                 </div>
                 <div class="mb-3 row align-items-center">
@@ -103,16 +84,19 @@ if (!isset($_POST['submit'])) {
     } else {
         try {
 
-            $nim = $_POST["nim"];
+            $nip = $_POST["nip"];
             $nama = $_POST["nama"];
-            $jk = $_POST["jk"];
-            $jurusan = $_POST["jurusan"];
-            $role_id = 3;
+            $kode_matkul = $_POST["kode_matkul"];
+            $nama_matkul = $_POST["nama_matkul"];
+            $role_id = 2;
             $password = md5($_POST["password"]);
 
-            $insertMhs = "INSERT INTO mahasiswa VALUE ('$nim','$nama','$jk','$jurusan','$password','$role_id')";
-            $queryMhs = mysqli_query($conn, $insertMhs);
-            if ($queryMhs) {
+            $insertDos = "INSERT INTO dosen VALUE ('$nip','$nama','$kode_matkul','$password','$role_id')";
+            $queryDos = mysqli_query($conn, $insertDos);
+
+            $insertMK = "INSERT INTO matakuliah VALUE ('$kode_matkul','$nama_matkul')";
+            $queryMK = mysqli_query($conn, $insertMK);
+            if ($queryDos && $queryMK) {
                 echo "<script>
             alert('Data Berhasil Disimpan!')
             window.location = 'index.php'

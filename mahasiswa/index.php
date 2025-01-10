@@ -1,5 +1,19 @@
 <?php
+session_start();
 include "../koneksi.php";
+
+if (!isset($_SESSION['role_id'])) {
+    header("Location: ../index.php");
+    exit;
+}
+
+if ($_SESSION['role_id'] == 1) {
+    header("Location: ../admin/index.php");
+}
+if ($_SESSION['role_id'] == 2) {
+    header("Location: ../dosen/index.php");
+}
+$sNIM = $_SESSION['username'];
 
 
 $queryMhs = "SELECT 
@@ -16,7 +30,7 @@ LEFT JOIN
 LEFT JOIN 
     dosen d ON d.nip = n.nip
 LEFT JOIN 
-    matakuliah mk ON d.kode_matkul = mk.kode_matkul;";
+    matakuliah mk ON d.kode_matkul = mk.kode_matkul WHERE m.nim = '$sNIM';";
 $resultMhs = mysqli_query($conn, $queryMhs);
 $countMhs = mysqli_num_rows($resultMhs);
 
@@ -55,6 +69,10 @@ $countMhs = mysqli_num_rows($resultMhs);
                 </li>
 
             </ul>
+            <a href="../logout.php" type="button" class="btn btn-danger d-flex justify-content-evenly align-items-center gap-1">Logout <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                </svg>
+            </a>
 
 
         </div>

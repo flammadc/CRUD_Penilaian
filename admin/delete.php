@@ -1,5 +1,13 @@
 <?php
+session_start();
 include "../koneksi.php";
+
+if (!isset($_SESSION['role_id'])) {
+    header("Location: ../index.php");
+    exit;
+}
+$role_id = $_SESSION['role_id'];
+$username = $_SESSION['username'];
 $getNIM = $_GET['nim'];
 $deleteMhs = "DELETE FROM mahasiswa WHERE nim = '$getNIM'";
 $deleteNilai = "DELETE FROM nilai WHERE nim = '$getNIM'";

@@ -1,5 +1,19 @@
 <?php
+session_start();
 include "../koneksi.php";
+
+if (!isset($_SESSION['role_id'])) {
+    header("Location: ../index.php");
+    exit;
+}
+
+if ($_SESSION['role_id'] == 2) {
+    header("Location: ../dosen/index.php");
+}
+if ($_SESSION['role_id'] == 3) {
+    header("Location: ../mahasiswa/index.php");
+}
+
 
 $queryMhs = "SELECT 
     m.nim, 
@@ -12,9 +26,9 @@ $queryMhs = "SELECT
     d.nama AS nama_dosen,
     d.nip
 FROM 
-    nilai n
+    mahasiswa m
 LEFT JOIN 
-    mahasiswa m ON m.nim = n.nim
+    nilai n ON m.nim = n.nim
 LEFT JOIN 
     dosen d ON d.nip = n.nip
 LEFT JOIN 
@@ -44,22 +58,31 @@ $countMhs = mysqli_num_rows($resultMhs);
                     Dashboard Admin
                 </h4>
             </a>
-            <ul class="nav justify-content-center">
+            <ul class="nav justify-content-center gap-5">
                 <li class="nav-item">
-                    <a class="nav-link text-black" aria-current="page" href="../admin/index.php">Admin</a>
+                    <a href="../logout.php" type="button" class="btn btn-danger d-flex justify-content-evenly align-items-center gap-1">Logout <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        </svg>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="../dosen/index.php">Dosen</a>
+                    <a href="addDos.php" type="button" class="btn btn-success d-flex justify-content-evenly align-items-center gap-1">Tambah Dosen <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        </svg>
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="../mahasiswa/index.php">Mahasiswa</a>
-                </li>
+                <div class="nav-item">
+                    <a href="add.php" type="button" class="btn btn-success d-flex justify-content-evenly align-items-center gap-1">Tambah Mahasiswa <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        </svg>
+                    </a>
+                </div>
+
 
             </ul>
-            <a href="add.php" type="button" class="btn btn-success d-flex justify-content-evenly align-items-center gap-1">Tambah Mahasiswa <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                </svg>
-            </a>
+
+
+
 
         </div>
     </nav>
