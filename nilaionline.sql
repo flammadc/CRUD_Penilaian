@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2025 at 04:46 AM
+-- Generation Time: Jan 13, 2025 at 05:36 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -60,8 +60,7 @@ CREATE TABLE `dosen` (
 --
 
 INSERT INTO `dosen` (`nip`, `nama`, `kode_matkul`, `password`, `role_id`) VALUES
-('001', 'Mr. Budiman', 'MK001', 'e750fdb2fd813693c772de61d1a85a19', 2),
-('002', 'Tonoman', 'MK002', '93dd4de5cddba2c733c65f233097f05a', 2);
+('001', 'Budiman', 'MK001', 'dc5c7986daef50c1e02ab09b442ee34f', 2);
 
 -- --------------------------------------------------------
 
@@ -83,8 +82,7 @@ CREATE TABLE `mahasiswa` (
 --
 
 INSERT INTO `mahasiswa` (`nim`, `nama`, `jk`, `jurusan`, `password`, `role_id`) VALUES
-('102', 'Seliman', 'Perempuan', 'Teknik Informatika', 'cc5fd592f4aaa1a35f38596fe5afc997', 3),
-('10523037', 'Muhammad Raffi', 'Laki-laki', 'Sistem Informasi', '28c8edde3d61a0411511d3b1866f0636', 3);
+('10523037', 'Muhamamd Raffi', 'Laki-laki', 'Sistem Informasi', '2f487b286702452b1f6400849af91031', 3);
 
 --
 -- Triggers `mahasiswa`
@@ -123,8 +121,7 @@ CREATE TABLE `matakuliah` (
 --
 
 INSERT INTO `matakuliah` (`kode_matkul`, `nama_matkul`) VALUES
-('MK002', 'Seni Rupa'),
-('MK001', 'Pemrograman Dasar');
+('MK001', 'Pemrograman Web');
 
 -- --------------------------------------------------------
 
@@ -145,10 +142,7 @@ CREATE TABLE `nilai` (
 --
 
 INSERT INTO `nilai` (`tugas`, `uts`, `uas`, `nim`, `nip`) VALUES
-(20, 79, 85, '10523037', '002'),
-(80, 100, 100, '10523037', '001'),
-(100, 56, 100, '102', '002'),
-(83, 65, 93, '102', '001');
+(80, 76, 90, '10523037', '001');
 
 --
 -- Triggers `nilai`
