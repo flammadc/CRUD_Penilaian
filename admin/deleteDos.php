@@ -14,7 +14,7 @@ $deleteMK = "DELETE FROM matakuliah WHERE kode_matkul = '$getMK'";
 $resultDos = mysqli_query($conn, $deleteDos);
 $resultMK = mysqli_query($conn, $deleteMK);
 
-if ($resultMhs && $resultMK) {
+if ($deleteDos && $deleteMK) {
     echo "<script>
     alert('Data Berhasil Didelete!')
     window.location = 'viewDos.php'
