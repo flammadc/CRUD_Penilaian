@@ -133,7 +133,7 @@ $countDos = mysqli_num_rows($resultDos);
         <?php
         } else {
             echo '<div class="alert alert-primary shadow-sm p-3 mb-5 rounded" role="alert">
-                Data Masih Kosong <a href="add.php" class="alert-link">Isi Data Sekarang</a>
+                Data Masih Kosong <a href="addDos.php" class="alert-link">Isi Data Sekarang</a>
                 </div>';
         }
         ?>
