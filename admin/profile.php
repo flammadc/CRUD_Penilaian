@@ -90,7 +90,7 @@ if (!isset($_POST['submit'])) {
 
         <div class="container">
             <form class="mt-5 shadow-sm py-4 px-3 mb-5 bg-light rounded" enctype="multipart/form-data" method="post">
-                <h4 class="mb-3">Profile <?php echo $getUsername ?></h4>
+                <h4 class="mb-3">Profile <?php echo $dataProfile[1] ?></h4>
 
                 <div class="mb-3 row align-items-center">
                     <label for="username" class="col-sm-2 fw-semibold col-form-label">Username</label>
