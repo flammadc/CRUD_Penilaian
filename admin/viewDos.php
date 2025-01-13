@@ -17,26 +17,17 @@ $getUsername = $_SESSION['username'];
 
 
 
-$queryMhs = "SELECT 
-    m.nim, 
-    m.nama, 
-    n.tugas, 
-    n.uts, 
-    n.uas, 
-    (0.2 * n.tugas) + (0.4 * n.uts) + (0.4 * n.uas) AS nilai_akhir, 
-    mk.nama_matkul AS nama_matakuliah, 
-    d.nama AS nama_dosen,
-    d.nip
+$queryDos = "SELECT 
+    d.nip, 
+    d.nama, 
+    d.kode_matkul, 
+    mk.nama_matkul AS nama_matakuliah 
 FROM 
-    mahasiswa m
-LEFT JOIN 
-    nilai n ON m.nim = n.nim
-LEFT JOIN 
-    dosen d ON d.nip = n.nip
+    dosen d
 LEFT JOIN 
     matakuliah mk ON d.kode_matkul = mk.kode_matkul";
-$resultMhs = mysqli_query($conn, $queryMhs);
-$countMhs = mysqli_num_rows($resultMhs);
+$resultDos = mysqli_query($conn, $queryDos);
+$countDos = mysqli_num_rows($resultDos);
 
 ?>
 
@@ -104,40 +95,32 @@ $countMhs = mysqli_num_rows($resultMhs);
     <div class="container  d-flex justify-content-center align-items-center pt-5 ">
 
         <?php
-        if ($countMhs > 0) {
+        if ($countDos > 0) {
 
         ?>
             <table class="table  shadow-sm p-3 mb-5 rounded">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col">NIM</th>
+                        <th scope="col">NIP</th>
                         <th scope="col">Nama</th>
-                        <th scope="col">Tugas</th>
-                        <th scope="col">UTS</th>
-                        <th scope="col">UAS</th>
-                        <th scope="col">Akhir</th>
-                        <th scope="col">Matakuliah</th>
-                        <th scope="col">Dosen</th>
+                        <th scope="col">Nama Matkul</th>
+                        <th scope="col">Kode Matkul</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    while ($dataMhs = mysqli_fetch_array($resultMhs, MYSQLI_NUM)) {
+                    while ($dataDos = mysqli_fetch_array($resultDos, MYSQLI_NUM)) {
                     ?>
                         <tr>
-                            <th scope="row"><?php echo "$dataMhs[0]" ?></th>
-                            <td><?php echo "$dataMhs[1]" ?></td>
-                            <td><?php echo "$dataMhs[2]" ?></td>
-                            <td><?php echo "$dataMhs[3]" ?></td>
-                            <td><?php echo "$dataMhs[4]" ?></td>
-                            <td><?php echo "$dataMhs[5]" ?></td>
-                            <td><?php echo "$dataMhs[6]" ?></td>
-                            <td><?php echo "$dataMhs[7]" ?></td>
+                            <th scope="row"><?php echo "$dataDos[0]" ?></th>
+                            <td><?php echo "$dataDos[1]" ?></td>
+                            <td><?php echo "$dataDos[3]" ?></td>
+                            <td><?php echo "$dataDos[2]" ?></td>
                             <td>
-                                <a href="edit.php?nim=<?php echo "$dataMhs[0]" ?>&nip=<?php echo "$dataMhs[8]" ?>" type="button" class="btn btn-warning">Edit</a>
+                                <a href="editDos.php?nip=<?php echo "$dataDos[0]" ?>" type="button" class="btn btn-warning">Edit</a>
                                 |
-                                <a href="delete.php?nim=<?php echo "$dataMhs[0]" ?>" type="button" class="btn btn-danger">Delete</a>
+                                <a href="deleteDos.php?nip=<?php echo "$dataDos[0]" ?>&mk=<?php echo "$dataDos[2]" ?>" type="button" class="btn btn-danger">Delete</a>
 
                             </td>
                         </tr>

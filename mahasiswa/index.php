@@ -49,7 +49,7 @@ $countMhs = mysqli_num_rows($resultMhs);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-transparent">
+<body class="bg-light">
     <nav class="navbar bg-body-secondary border-bottom border-light-subtle">
         <div class="container-fluid px-4">
             <a class="navbar-brand" href="index.php">
@@ -57,18 +57,7 @@ $countMhs = mysqli_num_rows($resultMhs);
                     Dashboard Mahasiswa
                 </h4>
             </a>
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link text-black" aria-current="page" href="../admin/index.php">Admin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="../dosen/index.php">Dosen</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="../mahasiswa/index.php">Mahasiswa</a>
-                </li>
 
-            </ul>
             <a href="../logout.php" type="button" class="btn btn-danger d-flex justify-content-evenly align-items-center gap-1">Logout <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                 </svg>

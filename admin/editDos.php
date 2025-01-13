@@ -14,8 +14,23 @@ if ($_SESSION['role_id'] == 2) {
 if ($_SESSION['role_id'] == 3) {
     header("Location: ../mahasiswa/index.php");
 }
-if (!isset($_POST['submit'])) {
+$getNIP = $_GET['nip'];
 
+$editDos = "SELECT 
+    d.nip, 
+    d.nama, 
+    d.kode_matkul, 
+    mk.nama_matkul AS nama_matakuliah 
+FROM 
+    dosen d
+LEFT JOIN 
+    matakuliah mk ON d.kode_matkul = mk.kode_matkul WHERE d.nip = '$getNIP'";
+
+$resultDos = mysqli_query($conn, $editDos);
+$dataDos = mysqli_fetch_array($resultDos);
+
+
+if (!isset($_POST['submit'])) {
 ?>
 
     <!DOCTYPE html>
@@ -24,10 +39,10 @@ if (!isset($_POST['submit'])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Edit Mahasiswa</title>
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
 
     <body class="bg-body">
@@ -79,79 +94,69 @@ if (!isset($_POST['submit'])) {
             </div>
         </nav>
 
-        <div class="container ">
+        <div class="container">
             <form class="mt-5 shadow-sm py-4 px-3 mb-5 bg-light rounded" enctype="multipart/form-data" method="post">
-                <h4 class="mb-3">Tambah Dosen</h4>
+                <h4 class="mb-3">Edit Data Dosen</h4>
+
                 <div class="mb-3 row align-items-center">
                     <label for="nip" class="col-sm-2 fw-semibold col-form-label">NIP</label>
                     <div class="col-sm-10">
-                        <input type="text" name="nip" class="form-control" id="nip">
+                        <input type="text" name="nip" class="form-control" id="nip" readonly value="<?php echo $dataDos[0]; ?>">
                     </div>
                 </div>
+
                 <div class="mb-3 row align-items-center">
                     <label for="nama" class="col-sm-2 fw-semibold col-form-label">Nama</label>
                     <div class="col-sm-10">
-                        <input type="text" name="nama" class="form-control" id="nama">
+                        <input type="text" name="nama" class="form-control" id="nama" value="<?php echo $dataDos[1]; ?>">
+                    </div>
+                </div>
+
+                <div class="mb-3 row align-items-center">
+                    <label for="nama_matkul" class="col-sm-2 fw-semibold col-form-label">Nama Mata Kuliah</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="nama_matkul" class="form-control" id="nama_matkul" value="<?php echo $dataDos[3]; ?>">
                     </div>
                 </div>
                 <div class="mb-3 row align-items-center">
                     <label for="kode_matkul" class="col-sm-2 fw-semibold col-form-label">Kode Mata Kuliah</label>
                     <div class="col-sm-10">
-                        <input type="text" name="kode_matkul" class="form-control" id="kode_matkul">
-                    </div>
-                </div>
-                <div class="mb-3 row align-items-center">
-                    <label for="nama_matkul" class="col-sm-2 fw-semibold col-form-label">Nama Mata Kuliah</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="nama_matkul" class="form-control" id="nama_matkul">
-                    </div>
-                </div>
-                <div class="mb-3 row align-items-center">
-                    <label for="password" class="col-sm-2 fw-semibold col-form-label">Password</label>
-                    <div class="col-sm-10">
-                        <input type="password" name="password" class="form-control" id="password">
+                        <input type="text" name="kode_matkul" class="form-control" id="kode_matkul" readonly value="<?php echo $dataDos[2]; ?>">
                     </div>
                 </div>
                 <div class="d-flex justify-items-right mt-4">
                     <div class="col-sm-10"></div>
-                    <button name="submit" type="submit" class="btn btn-primary col-sm-2 ">Submit</button>
+                    <button name="submit" type="submit" class="btn btn-primary col-sm-2">Submit</button>
                 </div>
             </form>
-        <?php
-    } else {
-        try {
-
-            $nip = $_POST["nip"];
-            $nama = $_POST["nama"];
-            $kode_matkul = $_POST["kode_matkul"];
-            $nama_matkul = $_POST["nama_matkul"];
-            $role_id = 2;
-            $password = md5($_POST["password"]);
-
-            $insertDos = "INSERT INTO dosen VALUE ('$nip','$nama','$kode_matkul','$password','$role_id')";
-            $queryDos = mysqli_query($conn, $insertDos);
-
-            $insertMK = "INSERT INTO matakuliah VALUE ('$kode_matkul','$nama_matkul')";
-            $queryMK = mysqli_query($conn, $insertMK);
-            if ($queryDos && $queryMK) {
-                echo "<script>
-            alert('Data Berhasil Disimpan!')
-            window.location = 'index.php'
-        </script>";
-            } else {
-                throw new Exception(mysqli_error($conn));
-            }
-        } catch (Exception $e) {
-            echo "<script>
-                alert('" . addslashes($e->getMessage()) . "');
-                window.location = '../admin/index.php';
-                </script>";
-        }
-    }
-        ?>
-
-
         </div>
     </body>
 
     </html>
+
+<?php
+} else {
+    $nip = mysqli_real_escape_string($conn, $_POST['nip']);
+    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
+    $nama_matkul = mysqli_real_escape_string($conn, $_POST['nama_matkul']);
+    $kode_matkul = mysqli_real_escape_string($conn, $_POST['kode_matkul']);
+
+    $updateDos = "UPDATE dosen SET nama='$nama' WHERE nip='$nip'";
+    $updateMK = "UPDATE matakuliah SET nama_matkul='$nama_matkul' WHERE kode_matkul='$kode_matkul'";
+
+    $queryDos = mysqli_query($conn, $updateDos);
+    $queryMK = mysqli_query($conn, $updateMK);
+
+    if ($queryDos && $queryMK) {
+        echo "<script>
+            alert('Data Berhasil Diupdate!');
+            window.location = 'viewDos.php';
+        </script>";
+    } else {
+        echo "<script>
+            alert('Data Gagal Diupdate: " . mysqli_error($conn) . "');
+            window.location = 'viewDos.php';
+        </script>";
+    }
+}
+?>
