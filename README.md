@@ -2,7 +2,6 @@
 
 A web-based application designed to manage and display student academic data, including grades, courses, and lecturer information. This project was developed as part of a Web Programming course assignment.
 
----
 
 ## Features
 
@@ -13,7 +12,6 @@ A web-based application designed to manage and display student academic data, in
 - **Dynamic Data Retrieval**: Query and filter student records based on NIM.
 - **Secure and Efficient**: Implements database joins and prepared statements to ensure performance and security.
 
----
 
 ## Technologies Used
 
@@ -32,6 +30,14 @@ A web-based application designed to manage and display student academic data, in
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" height="40" alt="bootstrap logo"  />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="40" alt="mysql logo"  />
-</div>
+</div>  
 
----
+
+## Username and Password
+
+| Username  | Password | Role | 
+| ------------- | ------------- | ------------- |
+| admin  | admin  | admin  |
+| 001  | 001  | dosen  |
+| 10523037  | 10523037  | mahasiswa  |
+
