@@ -135,7 +135,9 @@ $countMhs = mysqli_num_rows($resultMhs);
                             <td><?php echo "$dataMhs[6]" ?></td>
                             <td><?php echo "$dataMhs[7]" ?></td>
                             <td>
-                                <a href="edit.php?nim=<?php echo "$dataMhs[0]" ?>&nip=<?php echo "$dataMhs[8]" ?>" type="button" class="btn btn-warning">Edit</a>
+                                <a href="edit.php?nim=<?php echo "$dataMhs[0]" ?>&nip=<?php echo "$dataMhs[8]" ?>" type="button" class="btn btn-warning <?php if ($dataMhs[3] == '') {
+                                                                                                                                                            echo 'disabled';
+                                                                                                                                                        } ?>">Edit</a>
                                 |
                                 <a href="delete.php?nim=<?php echo "$dataMhs[0]" ?>" type="button" class="btn btn-danger">Delete</a>
 

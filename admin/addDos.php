@@ -136,7 +136,7 @@ if (!isset($_POST['submit'])) {
             if ($queryDos && $queryMK) {
                 echo "<script>
             alert('Data Berhasil Disimpan!')
-            window.location = 'index.php'
+            window.location = 'viewDos.php'
         </script>";
             } else {
                 throw new Exception(mysqli_error($conn));
@@ -144,7 +144,7 @@ if (!isset($_POST['submit'])) {
         } catch (Exception $e) {
             echo "<script>
                 alert('" . addslashes($e->getMessage()) . "');
-                window.location = '../admin/index.php';
+                window.location = '../admin/viewDos.php';
                 </script>";
         }
     }
